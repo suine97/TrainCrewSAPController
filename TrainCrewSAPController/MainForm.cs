@@ -12,6 +12,11 @@ namespace TrainCrewSAPController
         private bool IsSendSAPEnable = false;
 
         /// <summary>
+        /// カーソル入力ウィンドウ
+        /// </summary>
+        private CursorInputForm _cursorInputForm = null;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public MainForm()
@@ -70,9 +75,7 @@ namespace TrainCrewSAPController
             else
             {
                 if (TrackBar_SAPValue.Value - 1 >= TrackBar_SAPValue.Minimum)
-                {
                     TrackBar_SAPValue.Value -= 1;
-                }
             }
             //イベントをハンドルしたことを通知
             ((HandledMouseEventArgs)e).Handled = true;
@@ -135,6 +138,52 @@ namespace TrainCrewSAPController
             IsSendSAPEnable = CheckBox_SendSAPEnable.Checked;
             //SAP圧を送信
             if (IsSendSAPEnable) SendSAPValueFromTrackBar();
+        }
+
+        /// <summary>
+        /// Button_OpenCursorInput_Clickイベント：カーソル入力ウィンドウを開く
+        /// </summary>
+        private void Button_OpenCursorInput_Click(object sender, EventArgs e)
+        {
+            //既に開いている場合は前面に出す
+            if (_cursorInputForm != null && !_cursorInputForm.IsDisposed)
+            {
+                _cursorInputForm.BringToFront();
+                return;
+            }
+
+            _cursorInputForm = new CursorInputForm();
+            _cursorInputForm.StartPosition = FormStartPosition.Manual;
+            _cursorInputForm.Location = new System.Drawing.Point(this.Left, this.Bottom + 8);
+
+            _cursorInputForm.SAPValueChanged += OnCursorInputSAPValueChanged;
+            _cursorInputForm.EmergencyBrakeChanged += OnCursorInputEmergencyBrakeChanged;
+
+            //現在のTrackBar値をカーソル入力ウィンドウに同期
+            _cursorInputForm.SetSAPValue(TrackBar_SAPValue.Value / 100.0f);
+            _cursorInputForm.Show(this);
+        }
+
+        /// <summary>
+        /// カーソル入力ウィンドウからSAP圧変更通知を受け取る
+        /// </summary>
+        private void OnCursorInputSAPValueChanged(float kPa)
+        {
+            //TrackBarに反映（ValueChangedイベント経由でラベルも更新される）
+            TrackBar_SAPValue.Value = (int)(kPa * 100);
+            if (IsSendSAPEnable) TrainCrewInput.SetBrakeSAP(kPa);
+        }
+
+        /// <summary>
+        /// カーソル入力ウィンドウから非常ブレーキ変更通知を受け取る
+        /// </summary>
+        private void OnCursorInputEmergencyBrakeChanged(bool isEB)
+        {
+            if (!IsSendSAPEnable) return;
+            if (isEB)
+                TrainCrewInput.SetNotch(CursorInputForm.EB_NOTCH);
+            else
+                SendSAPValueFromTrackBar();
         }
 
         /// <summary>

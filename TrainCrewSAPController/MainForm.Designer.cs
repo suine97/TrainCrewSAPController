@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CheckBox_TopMost = new System.Windows.Forms.CheckBox();
             this.CheckBox_SendSAPEnable = new System.Windows.Forms.CheckBox();
+            this.Button_OpenCursorInput = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar_SAPValue)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,11 +114,22 @@
             this.CheckBox_SendSAPEnable.UseVisualStyleBackColor = true;
             this.CheckBox_SendSAPEnable.CheckedChanged += new System.EventHandler(this.CheckBox_SendSAPEnable_CheckedChanged);
             // 
+            // Button_OpenCursorInput
+            // 
+            this.Button_OpenCursorInput.Location = new System.Drawing.Point(12, 174);
+            this.Button_OpenCursorInput.Name = "Button_OpenCursorInput";
+            this.Button_OpenCursorInput.Size = new System.Drawing.Size(276, 25);
+            this.Button_OpenCursorInput.TabIndex = 9;
+            this.Button_OpenCursorInput.Text = "カーソル入力ウィンドウを開く";
+            this.Button_OpenCursorInput.UseVisualStyleBackColor = true;
+            this.Button_OpenCursorInput.Click += new System.EventHandler(this.Button_OpenCursorInput_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 181);
+            this.ClientSize = new System.Drawing.Size(304, 210);
+            this.Controls.Add(this.Button_OpenCursorInput);
             this.Controls.Add(this.CheckBox_SendSAPEnable);
             this.Controls.Add(this.CheckBox_TopMost);
             this.Controls.Add(this.label2);
@@ -131,7 +143,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar_SAPValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -142,6 +153,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox CheckBox_TopMost;
         private System.Windows.Forms.CheckBox CheckBox_SendSAPEnable;
+        private System.Windows.Forms.Button Button_OpenCursorInput;
     }
 }
 
