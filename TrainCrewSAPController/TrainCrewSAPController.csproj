@@ -50,6 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElectricCommandForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CursorInputForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +64,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ElectricCommandForm.resx">
+      <DependentUpon>ElectricCommandForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

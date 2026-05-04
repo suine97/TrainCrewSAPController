@@ -36,6 +36,7 @@
             this.CheckBox_TopMost = new System.Windows.Forms.CheckBox();
             this.CheckBox_SendSAPEnable = new System.Windows.Forms.CheckBox();
             this.Button_OpenCursorInput = new System.Windows.Forms.Button();
+            this.Button_OpenElectricCommand = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar_SAPValue)).BeginInit();
             this.SuspendLayout();
             // 
@@ -108,9 +109,9 @@
             this.CheckBox_SendSAPEnable.AutoSize = true;
             this.CheckBox_SendSAPEnable.Location = new System.Drawing.Point(102, 12);
             this.CheckBox_SendSAPEnable.Name = "CheckBox_SendSAPEnable";
-            this.CheckBox_SendSAPEnable.Size = new System.Drawing.Size(106, 16);
+            this.CheckBox_SendSAPEnable.Size = new System.Drawing.Size(110, 16);
             this.CheckBox_SendSAPEnable.TabIndex = 8;
-            this.CheckBox_SendSAPEnable.Text = "SAP圧制御有効";
+            this.CheckBox_SendSAPEnable.Text = "TrainCrewへ送信";
             this.CheckBox_SendSAPEnable.UseVisualStyleBackColor = true;
             this.CheckBox_SendSAPEnable.CheckedChanged += new System.EventHandler(this.CheckBox_SendSAPEnable_CheckedChanged);
             // 
@@ -124,11 +125,22 @@
             this.Button_OpenCursorInput.UseVisualStyleBackColor = true;
             this.Button_OpenCursorInput.Click += new System.EventHandler(this.Button_OpenCursorInput_Click);
             // 
+            // Button_OpenElectricCommand
+            // 
+            this.Button_OpenElectricCommand.Location = new System.Drawing.Point(12, 205);
+            this.Button_OpenElectricCommand.Name = "Button_OpenElectricCommand";
+            this.Button_OpenElectricCommand.Size = new System.Drawing.Size(276, 25);
+            this.Button_OpenElectricCommand.TabIndex = 10;
+            this.Button_OpenElectricCommand.Text = "電気指令値入力ウィンドウを開く";
+            this.Button_OpenElectricCommand.UseVisualStyleBackColor = true;
+            this.Button_OpenElectricCommand.Click += new System.EventHandler(this.Button_OpenElectricCommand_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 210);
+            this.ClientSize = new System.Drawing.Size(304, 241);
+            this.Controls.Add(this.Button_OpenElectricCommand);
             this.Controls.Add(this.Button_OpenCursorInput);
             this.Controls.Add(this.CheckBox_SendSAPEnable);
             this.Controls.Add(this.CheckBox_TopMost);
@@ -143,6 +155,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar_SAPValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -154,6 +167,7 @@
         private System.Windows.Forms.CheckBox CheckBox_TopMost;
         private System.Windows.Forms.CheckBox CheckBox_SendSAPEnable;
         private System.Windows.Forms.Button Button_OpenCursorInput;
+        private System.Windows.Forms.Button Button_OpenElectricCommand;
     }
 }
 

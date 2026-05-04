@@ -17,6 +17,11 @@ namespace TrainCrewSAPController
         private CursorInputForm _cursorInputForm = null;
 
         /// <summary>
+        /// 電気ブレーキ指令入力ウィンドウ
+        /// </summary>
+        private ElectricCommandForm _electricCommandForm = null;
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public MainForm()
@@ -116,6 +121,14 @@ namespace TrainCrewSAPController
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             TrainCrewInput.Dispose();
+            if (_cursorInputForm != null && !_cursorInputForm.IsDisposed)
+            {
+                _cursorInputForm.Dispose();
+            }
+            if (_electricCommandForm != null && !_electricCommandForm.IsDisposed)
+            {
+                _electricCommandForm.Dispose();
+            }
         }
 
         /// <summary>
@@ -145,6 +158,13 @@ namespace TrainCrewSAPController
         /// </summary>
         private void Button_OpenCursorInput_Click(object sender, EventArgs e)
         {
+            //電気ブレーキ指令入力ウィンドウが開いていたら閉じる
+            if (_electricCommandForm != null && !_electricCommandForm.IsDisposed)
+            {
+                _electricCommandForm.Close();
+                _electricCommandForm = null;
+            }
+
             //既に開いている場合は前面に出す
             if (_cursorInputForm != null && !_cursorInputForm.IsDisposed)
             {
@@ -162,6 +182,41 @@ namespace TrainCrewSAPController
             //現在のTrackBar値をカーソル入力ウィンドウに同期
             _cursorInputForm.SetSAPValue(TrackBar_SAPValue.Value / 100.0f);
             _cursorInputForm.Show(this);
+        }
+
+        /// <summary>
+        /// Button_OpenElectricCommand_Clickイベント：電気ブレーキ指令入力ウィンドウを開く
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_OpenElectricCommand_Click(object sender, EventArgs e)
+        {
+            //カーソル入力ウィンドウが開いていたら閉じる
+            if (_cursorInputForm != null && !_cursorInputForm.IsDisposed)
+            {
+                _cursorInputForm.Close();
+                _cursorInputForm = null;
+            }
+
+            //既に開いている場合は前面に出す
+            if (_electricCommandForm != null && !_electricCommandForm.IsDisposed)
+            {
+                _electricCommandForm.BringToFront();
+                return;
+            }
+
+            _electricCommandForm = new ElectricCommandForm();
+            _electricCommandForm.StartPosition = FormStartPosition.Manual;
+            _electricCommandForm.Location = new System.Drawing.Point(this.Left, this.Bottom + 8);
+
+            _electricCommandForm.CommandValueChanged += OnElectricCommandValueChanged;
+            _electricCommandForm.EmergencyBrakeChanged += OnElectricCommandEmergencyBrakeChanged;
+
+            //現在のTrackBar値から電気ブレーキ指令値を計算して同期（0～400kPa → 0～7）
+            float currentSAP = TrackBar_SAPValue.Value / 100.0f;
+            int commandValue = (int)Math.Round(currentSAP / 400.0f * 7.0f);
+            _electricCommandForm.SetCommandValue(commandValue);
+            _electricCommandForm.Show(this);
         }
 
         /// <summary>
@@ -184,6 +239,31 @@ namespace TrainCrewSAPController
                 TrainCrewInput.SetNotch(CursorInputForm.EB_NOTCH);
             else
                 SendSAPValueFromTrackBar();
+        }
+
+        /// <summary>
+        /// 電気ブレーキ指令入力ウィンドウから指令値変更通知を受け取る
+        /// </summary>
+        private void OnElectricCommandValueChanged(int command)
+        {
+            //電気ブレーキ指令の場合はTrackBarを0に設定
+            TrackBar_SAPValue.Value = 0;
+            //電気ブレーキ指令値を直接送信
+            if (IsSendSAPEnable) TrainCrewInput.SetBrakeNotch(command);
+        }
+
+        /// <summary>
+        /// 電気ブレーキ指令入力ウィンドウから非常ブレーキ変更通知を受け取る
+        /// </summary>
+        private void OnElectricCommandEmergencyBrakeChanged(bool isEB)
+        {
+            if (!IsSendSAPEnable) return;
+            if (isEB)
+            {
+                //EBゾーンに入った場合は指令値8を送信
+                TrainCrewInput.SetBrakeNotch(8);
+            }
+            //EB→段階への変化時は何もしない（CommandValueChangedで現在値が送信される）
         }
 
         /// <summary>
