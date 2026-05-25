@@ -37,6 +37,7 @@
             this.CheckBox_SendSAPEnable = new System.Windows.Forms.CheckBox();
             this.Button_OpenCursorInput = new System.Windows.Forms.Button();
             this.Button_OpenElectricCommand = new System.Windows.Forms.Button();
+            this.Button_OpenAutomaticAirBraleCommand = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBar_SAPValue)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,15 +132,26 @@
             this.Button_OpenElectricCommand.Name = "Button_OpenElectricCommand";
             this.Button_OpenElectricCommand.Size = new System.Drawing.Size(276, 25);
             this.Button_OpenElectricCommand.TabIndex = 10;
-            this.Button_OpenElectricCommand.Text = "電気指令値入力ウィンドウを開く";
+            this.Button_OpenElectricCommand.Text = "電気ブレーキ指令入力入力ウィンドウを開く";
             this.Button_OpenElectricCommand.UseVisualStyleBackColor = true;
             this.Button_OpenElectricCommand.Click += new System.EventHandler(this.Button_OpenElectricCommand_Click);
+            // 
+            // Button_OpenAutomaticAirBraleCommand
+            // 
+            this.Button_OpenAutomaticAirBraleCommand.Location = new System.Drawing.Point(12, 236);
+            this.Button_OpenAutomaticAirBraleCommand.Name = "Button_OpenAutomaticAirBraleCommand";
+            this.Button_OpenAutomaticAirBraleCommand.Size = new System.Drawing.Size(276, 25);
+            this.Button_OpenAutomaticAirBraleCommand.TabIndex = 11;
+            this.Button_OpenAutomaticAirBraleCommand.Text = "自動空気ブレーキ指令入力ウィンドウを開く";
+            this.Button_OpenAutomaticAirBraleCommand.UseVisualStyleBackColor = true;
+            this.Button_OpenAutomaticAirBraleCommand.Click += new System.EventHandler(this.Button_OpenAutomaticAirBraleCommand_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 241);
+            this.ClientSize = new System.Drawing.Size(304, 271);
+            this.Controls.Add(this.Button_OpenAutomaticAirBraleCommand);
             this.Controls.Add(this.Button_OpenElectricCommand);
             this.Controls.Add(this.Button_OpenCursorInput);
             this.Controls.Add(this.CheckBox_SendSAPEnable);
@@ -168,6 +180,7 @@
         private System.Windows.Forms.CheckBox CheckBox_SendSAPEnable;
         private System.Windows.Forms.Button Button_OpenCursorInput;
         private System.Windows.Forms.Button Button_OpenElectricCommand;
+        private System.Windows.Forms.Button Button_OpenAutomaticAirBraleCommand;
     }
 }
 

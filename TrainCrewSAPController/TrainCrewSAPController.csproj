@@ -50,6 +50,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutomaticAirBrakeCommandForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ElectricCommandForm.cs">
       <SubType>Form</SubType>
     </Compile>
